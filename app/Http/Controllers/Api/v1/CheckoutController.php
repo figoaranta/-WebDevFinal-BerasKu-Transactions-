@@ -4,8 +4,8 @@ use App\Http\Controllers\Controller;
 use Cartalyst\Stripe\Laravel\Facades\ Stripe;
 use Illuminate\Http\Request;
 use App\Order;
-use Session;
 use App\Cart;
+use DB;
 use Auth;
 
 \Stripe\Stripe::setApiKey('sk_test_Z5nyrQe93T2hIZdrX7A1bPHG003aB4x50Q');
@@ -21,11 +21,12 @@ class CheckoutController extends Controller
         // } catch (\Tymon\JWTAuth\Exceptions\UserNotDefinedException $e) {
         //     return response()->json(['error'=> $e->getMessage()]);
         // }
-        $oldCart = DB::table('carts')->where('id', $id)->first();
-        $output = DB::table('carts')->where('id', $id);
-
+        $oldCart = DB::connection('mysql2')->table('carts')->where('id', $id)->get();
+        $output = DB::connection('mysql2')->table('carts')->where('id', $id);
+        
         // $oldCart = Session::get('cart'.$id);
-        $cart = new Cart($oldCart);
+        $oldCart[0]->productId = json_decode($oldCart[0]->productId,true);
+        $cart = new Cart($oldCart[0]);
 
     	try {
     		$customer = \Stripe\Customer::create([

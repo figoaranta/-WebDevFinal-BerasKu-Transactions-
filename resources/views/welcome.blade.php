@@ -59,7 +59,7 @@
     @endif
 
     <h3>Payment Details</h3>
-    <form action="checkout" method="POST" id="payment-form">
+    <form action="api/v1/checkout/1" method="POST" id="payment-form">
         {{csrf_field()}}
         <label>Name:</label>
         <input type="text" name="name" id="name" >

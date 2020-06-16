@@ -21,6 +21,6 @@ use Illuminate\Support\Facades\Route;
 Route::prefix('v1')->group(function(){
 	Route::apiResource('orders','Api\v1\OrderController')->only(['index']);
 	Route::apiResource('order','Api\v1\OrderController')->only(['show','destroy','update','store']);
+	Route::post('checkout/{id}','Api\v1\CheckoutController@store');
 });
 
-Route::post('checkout/{id}','Api\v1\CheckoutController@store');
