@@ -14,8 +14,6 @@ class CheckoutController extends Controller
 {
     public function store(Request $request,$id)
     {
-    	// dd($request->all());
-
         // try {
         //     $user = auth()->userOrFail();
         // } catch (\Tymon\JWTAuth\Exceptions\UserNotDefinedException $e) {
@@ -38,8 +36,8 @@ class CheckoutController extends Controller
         	]);
 
     		$charge = Stripe::charges()->create([
-    			'amount' => 500,
-    			'currency' => 'usd',
+    			'amount' => $request->amount,
+    			'currency' => 'idr',
                 'customer' => $customer->id,
     			'description' => $request->description,
     			// 'receipt_email' => $request->email,
