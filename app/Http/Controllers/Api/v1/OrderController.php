@@ -14,8 +14,10 @@ class OrderController extends Controller
     {
     	return new OrderResourceCollection(Order::paginate());
     }
-    public function show(Order $order):OrderResource
+    public function show($id)
     {
+        $order = Order::where('account_id',$id)->first();
+        $order->cart = unserialize($order->cart);
     	return new OrderResource($order);
     }
     public function store(Request $request):OrderResource
